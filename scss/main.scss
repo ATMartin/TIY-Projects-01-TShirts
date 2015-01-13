@@ -1,0 +1,227 @@
+$picton-blue: rgb(92, 164, 215);
+$dark-sea-green: rgb(139, 185, 146);
+$can-can: rgb(212, 130, 170);
+$manhattan: rgb(220, 176, 125);
+
+$primary-color: $picton-blue;
+
+$swatch-blue: $picton-blue;
+$swatch-green: $dark-sea-green;
+$swatch-pink: $can-can;
+$swatch-yellow: $manhattan;
+
+$primary-font: 'Arial', sans-serif;
+
+$frame-border: 3px solid $primary-color;
+
+$frame-height: 400px;
+$frame-width: 300px;
+
+$display-height: 300px;
+$display-width: 300px;
+
+$toolbar-height: 50px;
+
+$toolbar-button-width: 20%;
+
+$sizes-height: 100px;
+$sizes-width: 60px;
+
+$swatch-size: 30px;
+$swatches-height: 75px;
+$swatches-width: 80px;
+
+
+
+* { box-sizing: border-box; }
+
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: $primary-font;
+  color: $primary-color;
+  font-size: 20px;
+}
+
+.item-frame {
+  background-color: white;
+  position: relative;
+  height: $frame-height;
+  width: $frame-width;;
+}
+
+.item-display {
+  position: relative;
+  height: $display-height;
+  width: 100%;
+  border: $frame-border;
+  perspective: 1000;
+  & img {
+    display: block;
+    width: 280px;
+    height: 280px;
+    margin: 2% auto;
+    backface-visibility: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  & > .flipper {
+    transition: 0.6s;
+    transform-style: preserve-3d;
+    position: relative;
+  }
+}
+
+.front {
+  z-index: 2;
+}
+
+.back {
+  transform: rotateY(180deg);
+}
+
+.item-flip-corner{
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 40px;
+  width: 40px;
+  border-left: $frame-border;
+  border-bottom: $frame-border;
+  padding: 3%;
+  z-index: 2;
+  transition: all ease 0.5s;
+  &:hover {
+    background-color: $primary-color;
+    color: white;
+  }
+  &:active + .flipper {
+    transform: rotateY(180deg);
+  }
+}
+
+.item-toolbar{
+  height: $toolbar-height;
+  width: 100%;
+}
+
+.toolbar-button {
+  position: relative;
+  display: inline-block;
+  width: $toolbar-button-width;
+  height: 100%;
+  border-right: $frame-border;
+  border-bottom: $frame-border;
+  vertical-align: middle;
+  padding: 5%;
+  transition: all ease 0.5s;
+  &:hover {
+    background-color: $primary-color;
+    color: white;
+  }
+  &.flip {}
+  &.fave {}
+  &.size {
+    &:hover .sizes {
+      z-index: 10;
+      opacity: 1;
+      top: -($sizes-height);
+      color: $primary-color;
+    }
+  }
+  &.color {
+    > .swatch.blue {
+      margin-top: -6px;
+    }
+    &:hover .swatches {
+      z-index: 10;
+      opacity: 1;
+      top: -($swatches-height);
+    }
+  }
+  &.buy {}
+}
+
+.behind {
+  z-index: -1;
+  opacity: 0;
+}
+
+.sizes {
+  border: $frame-border;
+  background-color: white;
+  position: absolute;
+  height: $sizes-height;
+  width: $sizes-width;
+  top: -($sizes-height + 20px);
+  left: -2px;
+  transition: all ease 0.5s;
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 10% 0;
+    text-align: center;
+    li {
+      display: block;
+      font-size: 18px;
+      margin: 0 auto;
+      transition: all ease 0.1s;
+      &:hover {
+        background-color: $primary-color;
+        color: white;
+      }
+    }
+  }
+
+}
+
+.swatch {
+  height: $swatch-size;
+  width: $swatch-size;
+  border: 1px white solid;
+  background-color: white;
+  &.blue   { background-color: $swatch-blue;   }
+  &.green  { background-color: $swatch-green;  }
+  &.pink   { background-color: $swatch-pink;   }
+  &.yellow { background-color: $swatch-yellow; }
+}
+
+
+
+.swatches {
+  border: $frame-border;
+  background-color: white;
+  position: absolute;
+  height: $swatches-height;
+  width: $swatches-width;
+  top: -($swatches-height + 20px);
+  left: -12px;
+  transition: all ease 0.5s;
+  text-align: center;
+  padding-top: 2px;
+  .swatch {
+    display: inline-block;
+    margin: 0 1px;
+  }
+}
+
+
+.item-info {
+  height: 20px;
+  text-align: center;
+  padding: 3% 1% 0 1%;
+  & > .item-title {
+    display: inline-block;
+    width: 78%;
+    text-align: left;
+  }
+  & > .item-price {
+    display: inline-block;
+    width: 18%;
+    text-align: right;
+    font-weight: bold;
+  }
+}
